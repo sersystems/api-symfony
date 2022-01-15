@@ -23,8 +23,6 @@
         "symfony/security-bundle": "5.3.*",
         "symfony/yaml": "5.3.*"
     },
-    "require-dev": {
-    },
     "config": {
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
