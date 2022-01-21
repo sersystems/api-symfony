@@ -28,9 +28,14 @@ class RespuestaMultiple
     private $imagen;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $devolucion;
+
+    /**
      * @ORM\Column(type="boolean")
      */
-    private $correcta;
+    private $es_correcta;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
@@ -38,13 +43,18 @@ class RespuestaMultiple
     private $puntaje;
 
     /**
-     * @ORM\ManyToOne(targetEntity=PreguntaMultiple::class, inversedBy="respuestasMultiple")
+     * @ORM\ManyToOne(targetEntity=PreguntaMultiple::class, inversedBy="respuestaMultiples")
      * @ORM\JoinColumn(nullable=false)
      */
     private $pregunta_multiple;
 
 
     // ******************** METODOS GETTER & SETTER ******************** //
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getTexto(): ?string
     {
         return $this->texto;
@@ -69,14 +79,26 @@ class RespuestaMultiple
         return $this;
     }
 
-    public function getCorrecta(): ?bool
+    public function getDevolucion(): ?string
     {
-        return $this->correcta;
+        return $this->devolucion;
     }
 
-    public function setCorrecta(bool $correcta): self
+    public function setDevolucion(?string $devolucion): self
     {
-        $this->correcta = $correcta;
+        $this->devolucion = $devolucion;
+
+        return $this;
+    }
+
+    public function getEsCorrecta(): ?bool
+    {
+        return $this->es_correcta;
+    }
+
+    public function setEsCorrecta(bool $es_correcta): self
+    {
+        $this->es_correcta = $es_correcta;
 
         return $this;
     }
@@ -103,10 +125,5 @@ class RespuestaMultiple
         $this->pregunta_multiple = $pregunta_multiple;
 
         return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 }

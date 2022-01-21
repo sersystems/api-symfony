@@ -25,23 +25,25 @@ class Preguntero
     private $respondederos;
 
     /**
-     * @ORM\ManyToOne(targetEntity=evaluacion::class)
+     * @ORM\ManyToOne(targetEntity=Evaluacion::class, inversedBy="pregunteros")
      * @ORM\JoinColumn(nullable=false)
      */
     private $evaluacion;
 
     /**
-     * @ORM\ManyToOne(targetEntity=preguntaMultiple::class)
+     * @ORM\ManyToOne(targetEntity=PreguntaMultiple::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $pregunta_multiple;
 
     /**
-     * @ORM\ManyToOne(targetEntity=preguntaDesarrollo::class)
+     * @ORM\ManyToOne(targetEntity=PreguntaDesarrollo::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $pregunta_desarrollo;
 
+
+    // ************************** CONSTRUCTOR ************************** //
     public function __construct()
     {
         $this->respondederos = new ArrayCollection();
@@ -75,6 +77,7 @@ class Preguntero
     public function removeRespondedero(Respondedero $respondedero): self
     {
         if ($this->respondederos->removeElement($respondedero)) {
+            // set the owning side to null (unless already changed)
             if ($respondedero->getPreguntero() === $this) {
                 $respondedero->setPreguntero(null);
             }
@@ -83,36 +86,36 @@ class Preguntero
         return $this;
     }
 
-    public function getEvaluacion(): ?evaluacion
+    public function getEvaluacion(): ?Evaluacion
     {
         return $this->evaluacion;
     }
 
-    public function setEvaluacion(?evaluacion $evaluacion): self
+    public function setEvaluacion(?Evaluacion $evaluacion): self
     {
         $this->evaluacion = $evaluacion;
 
         return $this;
     }
 
-    public function getPreguntaMultiple(): ?preguntaMultiple
+    public function getPreguntaMultiple(): ?PreguntaMultiple
     {
         return $this->pregunta_multiple;
     }
 
-    public function setPreguntaMultiple(?preguntaMultiple $pregunta_multiple): self
+    public function setPreguntaMultiple(?PreguntaMultiple $pregunta_multiple): self
     {
         $this->pregunta_multiple = $pregunta_multiple;
 
         return $this;
     }
 
-    public function getPreguntaDesarrollo(): ?preguntaDesarrollo
+    public function getPreguntaDesarrollo(): ?PreguntaDesarrollo
     {
         return $this->pregunta_desarrollo;
     }
 
-    public function setPreguntaDesarrollo(?preguntaDesarrollo $pregunta_desarrollo): self
+    public function setPreguntaDesarrollo(?PreguntaDesarrollo $pregunta_desarrollo): self
     {
         $this->pregunta_desarrollo = $pregunta_desarrollo;
 

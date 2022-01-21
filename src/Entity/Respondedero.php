@@ -28,13 +28,13 @@ class Respondedero
     private $puntaje;
 
     /**
-     * @ORM\ManyToOne(targetEntity=inscripcion::class, inversedBy="respondederos")
+     * @ORM\ManyToOne(targetEntity=Inscripcion::class, inversedBy="respondederos")
      * @ORM\JoinColumn(nullable=false)
      */
     private $inscripcion;
 
     /**
-     * @ORM\ManyToOne(targetEntity=preguntero::class, inversedBy="respondederos")
+     * @ORM\ManyToOne(targetEntity=Preguntero::class, inversedBy="respondederos")
      * @ORM\JoinColumn(nullable=false)
      */
     private $preguntero;
@@ -70,24 +70,24 @@ class Respondedero
         return $this;
     }
 
-    public function getInscripcion(): ?inscripcion
+    public function getInscripcion(): ?Inscripcion
     {
         return $this->inscripcion;
     }
 
-    public function setInscripcion(?inscripcion $inscripcion): self
+    public function setInscripcion(?Inscripcion $inscripcion): self
     {
         $this->inscripcion = $inscripcion;
 
         return $this;
     }
 
-    public function getPreguntero(): ?preguntero
+    public function getPreguntero(): ?Preguntero
     {
         return $this->preguntero;
     }
 
-    public function setPreguntero(?preguntero $preguntero): self
+    public function setPreguntero(?Preguntero $preguntero): self
     {
         $this->preguntero = $preguntero;
 

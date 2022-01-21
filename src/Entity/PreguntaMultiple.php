@@ -30,9 +30,9 @@ class PreguntaMultiple
     private $imagen;
 
     /**
-     * @ORM\OneToMany(targetEntity=RespuestaMultiple::class, mappedBy="pregunta_multiple", orphanRemoval=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $respuestasMultiple;
+    private $devolucion;
 
     /**
      * @ORM\ManyToOne(targetEntity=Modulo::class)
@@ -40,11 +40,16 @@ class PreguntaMultiple
      */
     private $modulo;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RespuestaMultiple::class, mappedBy="pregunta_multiple")
+     */
+    private $respuestaMultiples;
+
 
     // ************************** CONSTRUCTOR ************************** //
     public function __construct()
     {
-        $this->respuestasMultiple = new ArrayCollection();
+        $this->respuestaMultiples = new ArrayCollection();
     }
 
 
@@ -78,43 +83,14 @@ class PreguntaMultiple
         return $this;
     }
 
-    /**
-     * @return Collection|RespuestaMultiple[]
-     */
-    public function getRespuestasMultiple(): Collection
+    public function getDevolucion(): ?string
     {
-        return $this->respuestasMultiple;
+        return $this->devolucion;
     }
 
-    public function addRespuestasMultiple(RespuestaMultiple $respuestasMultiple): self
+    public function setDevolucion(?string $devolucion): self
     {
-        if (!$this->respuestasMultiple->contains($respuestasMultiple)) {
-            $this->respuestasMultiple[] = $respuestasMultiple;
-            $respuestasMultiple->setPreguntaMultiple($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRespuestasMultiple(RespuestaMultiple $respuestasMultiple): self
-    {
-        if ($this->respuestasMultiple->removeElement($respuestasMultiple)) {
-            if ($respuestasMultiple->getPreguntaMultiple() === $this) {
-                $respuestasMultiple->setPreguntaMultiple(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getModuloId(): ?Modulo
-    {
-        return $this->modulo;
-    }
-
-    public function setModuloId(?Modulo $modulo): self
-    {
-        $this->modulo = $modulo;
+        $this->devolucion = $devolucion;
 
         return $this;
     }
@@ -127,6 +103,35 @@ class PreguntaMultiple
     public function setModulo(?Modulo $modulo): self
     {
         $this->modulo = $modulo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RespuestaMultiple[]
+     */
+    public function getRespuestaMultiples(): Collection
+    {
+        return $this->respuestaMultiples;
+    }
+
+    public function addRespuestaMultiple(RespuestaMultiple $respuestaMultiple): self
+    {
+        if (!$this->respuestaMultiples->contains($respuestaMultiple)) {
+            $this->respuestaMultiples[] = $respuestaMultiple;
+            $respuestaMultiple->setPreguntaMultiple($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRespuestaMultiple(RespuestaMultiple $respuestaMultiple): self
+    {
+        if ($this->respuestaMultiples->removeElement($respuestaMultiple)) {
+            if ($respuestaMultiple->getPreguntaMultiple() === $this) {
+                $respuestaMultiple->setPreguntaMultiple(null);
+            }
+        }
 
         return $this;
     }

@@ -18,13 +18,13 @@ class Equipo
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=docente::class)
+     * @ORM\ManyToOne(targetEntity=Docente::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $docente;
 
     /**
-     * @ORM\ManyToOne(targetEntity=materia::class, inversedBy="equipos")
+     * @ORM\ManyToOne(targetEntity=Materia::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $materia;
@@ -36,24 +36,24 @@ class Equipo
         return $this->id;
     }
 
-    public function getDocente(): ?docente
+    public function getDocente(): ?Docente
     {
         return $this->docente;
     }
 
-    public function setDocente(?docente $docente): self
+    public function setDocente(?Docente $docente): self
     {
         $this->docente = $docente;
 
         return $this;
     }
 
-    public function getMateria(): ?materia
+    public function getMateria(): ?Materia
     {
         return $this->materia;
     }
 
-    public function setMateria(?materia $materia): self
+    public function setMateria(?Materia $materia): self
     {
         $this->materia = $materia;
 

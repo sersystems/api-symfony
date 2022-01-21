@@ -50,6 +50,8 @@ class Camada
      */
     private $inscripciones;
 
+
+    // ************************** CONSTRUCTOR ************************** //
     public function __construct()
     {
         $this->inscripciones = new ArrayCollection();
@@ -125,7 +127,7 @@ class Camada
     /**
      * @return Collection|Inscripcion[]
      */
-    public function getInscripciones(): Collection
+    public function getinscripciones(): Collection
     {
         return $this->inscripciones;
     }

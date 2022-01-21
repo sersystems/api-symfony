@@ -6,9 +6,12 @@ use App\Repository\InstitucionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=InstitucionRepository::class)
+ * @UniqueEntity("email")
  */
 class Institucion
 {
@@ -21,11 +24,13 @@ class Institucion
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Length(min = 2, max = 50)
      */
     private $nombre;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email
      */
     private $email;
 
@@ -34,9 +39,17 @@ class Institucion
      */
     private $docentes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Estudiante::class, mappedBy="institucion")
+     */
+    private $estudiantes;
+
+
+    // ************************** CONSTRUCTOR ************************** //
     public function __construct()
     {
         $this->docentes = new ArrayCollection();
+        $this->estudiantes = new ArrayCollection();
     }
 
 

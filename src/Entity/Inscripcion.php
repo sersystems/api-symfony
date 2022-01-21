@@ -30,13 +30,13 @@ class Inscripcion
     private $promedio;
 
     /**
-     * @ORM\ManyToOne(targetEntity=camada::class, inversedBy="inscripciones")
+     * @ORM\ManyToOne(targetEntity=Camada::class, inversedBy="inscripcions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $camada;
 
     /**
-     * @ORM\ManyToOne(targetEntity=estudiante::class, inversedBy="inscripciones")
+     * @ORM\ManyToOne(targetEntity=Estudiante::class, inversedBy="inscripcions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $estudiante;
@@ -46,6 +46,8 @@ class Inscripcion
      */
     private $respondederos;
 
+
+    // ************************** CONSTRUCTOR ************************** //
     public function __construct()
     {
         $this->respondederos = new ArrayCollection();
@@ -82,24 +84,24 @@ class Inscripcion
         return $this;
     }
 
-    public function getCamada(): ?camada
+    public function getCamada(): ?Camada
     {
         return $this->camada;
     }
 
-    public function setCamada(?camada $camada): self
+    public function setCamada(?Camada $camada): self
     {
         $this->camada = $camada;
 
         return $this;
     }
 
-    public function getEstudiante(): ?estudiante
+    public function getEstudiante(): ?Estudiante
     {
         return $this->estudiante;
     }
 
-    public function setEstudiante(?estudiante $estudiante): self
+    public function setEstudiante(?Estudiante $estudiante): self
     {
         $this->estudiante = $estudiante;
 

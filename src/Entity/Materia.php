@@ -25,19 +25,14 @@ class Materia
     private $nombre;
 
     /**
-     * @ORM\OneToMany(targetEntity=Modulo::class, mappedBy="materia")
-     */
-    private $modulos;
-
-    /**
      * @ORM\OneToMany(targetEntity=Camada::class, mappedBy="materia")
      */
     private $camadas;
 
     /**
-     * @ORM\OneToMany(targetEntity=Equipo::class, mappedBy="materia")
+     * @ORM\OneToMany(targetEntity=Modulo::class, mappedBy="materia")
      */
-    private $equipos;
+    private $modulos;
 
     /**
      * @ORM\OneToMany(targetEntity=Evaluacion::class, mappedBy="materia")
@@ -48,9 +43,8 @@ class Materia
     // ************************** CONSTRUCTOR ************************** //
     public function __construct()
     {
-        $this->modulos = new ArrayCollection();
         $this->camadas = new ArrayCollection();
-        $this->equipos = new ArrayCollection();
+        $this->modulos = new ArrayCollection();
         $this->evaluaciones = new ArrayCollection();
     }
 
@@ -69,35 +63,6 @@ class Materia
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Modulo[]
-     */
-    public function getModulos(): Collection
-    {
-        return $this->modulos;
-    }
-
-    public function addModulo(Modulo $modulo): self
-    {
-        if (!$this->modulos->contains($modulo)) {
-            $this->modulos[] = $modulo;
-            $modulo->setMateria($this);
-        }
-
-        return $this;
-    }
-
-    public function removeModulo(Modulo $modulo): self
-    {
-        if ($this->modulos->removeElement($modulo)) {
-            if ($modulo->getMateria() === $this) {
-                $modulo->setMateria(null);
-            }
-        }
 
         return $this;
     }
@@ -132,28 +97,28 @@ class Materia
     }
 
     /**
-     * @return Collection|Equipo[]
+     * @return Collection|Modulo[]
      */
-    public function getEquipos(): Collection
+    public function getModulos(): Collection
     {
-        return $this->equipos;
+        return $this->modulos;
     }
 
-    public function addEquipo(Equipo $equipo): self
+    public function addModulo(Modulo $modulo): self
     {
-        if (!$this->equipos->contains($equipo)) {
-            $this->equipos[] = $equipo;
-            $equipo->setMateria($this);
+        if (!$this->modulos->contains($modulo)) {
+            $this->modulos[] = $modulo;
+            $modulo->setMateria($this);
         }
 
         return $this;
     }
 
-    public function removeEquipo(Equipo $equipo): self
+    public function removeModulo(Modulo $modulo): self
     {
-        if ($this->equipos->removeElement($equipo)) {
-            if ($equipo->getMateria() === $this) {
-                $equipo->setMateria(null);
+        if ($this->modulos->removeElement($modulo)) {
+            if ($modulo->getMateria() === $this) {
+                $modulo->setMateria(null);
             }
         }
 
@@ -166,6 +131,27 @@ class Materia
     public function getEvaluaciones(): Collection
     {
         return $this->evaluaciones;
+    }
+
+    public function addEvaluacion(Evaluacion $evaluacion): self
+    {
+        if (!$this->evaluaciones->contains($evaluacion)) {
+            $this->evaluaciones[] = $evaluacion;
+            $evaluacion->setMateria($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvaluacion(Evaluacion $evaluacion): self
+    {
+        if ($this->evaluaciones->removeElement($evaluacion)) {
+            if ($evaluacion->getMateria() === $this) {
+                $evaluacion->setMateria(null);
+            }
+        }
+
+        return $this;
     }
 
     public function addEvaluacione(Evaluacion $evaluacione): self
@@ -181,6 +167,7 @@ class Materia
     public function removeEvaluacione(Evaluacion $evaluacione): self
     {
         if ($this->evaluaciones->removeElement($evaluacione)) {
+            // set the owning side to null (unless already changed)
             if ($evaluacione->getMateria() === $this) {
                 $evaluacione->setMateria(null);
             }

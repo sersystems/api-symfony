@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\DocenteRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=DocenteRepository::class)
+ * @UniqueEntity("email")
  */
 class Docente
 {
@@ -19,16 +22,19 @@ class Docente
 
     /**
      * @ORM\Column(type="string", length=25)
+     * @Assert\Length(min = 2, max = 50)
      */
     private $apellido;
 
     /**
      * @ORM\Column(type="string", length=25)
+     * @Assert\Length(min = 2, max = 50)
      */
     private $nombre;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email
      */
     private $email;
 
@@ -38,13 +44,13 @@ class Docente
     private $activo;
 
     /**
-     * @ORM\ManyToOne(targetEntity=institucion::class, inversedBy="docentes")
+     * @ORM\ManyToOne(targetEntity=Institucion::class, inversedBy="docentes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $institucion;
 
     /**
-     * @ORM\OneToOne(targetEntity=user::class)
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -104,24 +110,24 @@ class Docente
         return $this;
     }
 
-    public function getInstitucion(): ?institucion
+    public function getInstitucion(): ?Institucion
     {
         return $this->institucion;
     }
 
-    public function setInstitucion(?institucion $institucion): self
+    public function setInstitucion(?Institucion $institucion): self
     {
         $this->institucion = $institucion;
 
         return $this;
     }
 
-    public function getUser(): ?user
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(user $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 

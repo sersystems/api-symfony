@@ -28,6 +28,12 @@ class PreguntaDesarrollo
     private $imagen;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     */
+    private $devolucion;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Modulo::class)
      * @ORM\JoinColumn(nullable=false)
      */
@@ -60,6 +66,18 @@ class PreguntaDesarrollo
     public function setImagen(?string $imagen): self
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    public function getDevolucion(): ?string
+    {
+        return $this->devolucion;
+    }
+
+    public function setDevolucion(?string $devolucion): self
+    {
+        $this->devolucion = $devolucion;
 
         return $this;
     }

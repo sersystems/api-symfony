@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EvaluacionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -58,10 +60,20 @@ class Evaluacion
     private $finalizada;
 
     /**
-     * @ORM\ManyToOne(targetEntity=materia::class, inversedBy="evaluaciones")
+     * @ORM\ManyToOne(targetEntity=Materia::class, inversedBy="evaluaciones")
      * @ORM\JoinColumn(nullable=false)
      */
     private $materia;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Preguntero::class, mappedBy="evaluacion")
+     */
+    private $pregunteros;
+
+    public function __construct()
+    {
+        $this->pregunteros = new ArrayCollection();
+    }
 
 
     // ******************** METODOS GETTER & SETTER ******************** //
@@ -166,14 +178,44 @@ class Evaluacion
         return $this;
     }
 
-    public function getMateria(): ?materia
+    public function getMateria(): ?Materia
     {
         return $this->materia;
     }
 
-    public function setMateria(?materia $materia): self
+    public function setMateria(?Materia $materia): self
     {
         $this->materia = $materia;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Preguntero[]
+     */
+    public function getPregunteros(): Collection
+    {
+        return $this->pregunteros;
+    }
+
+    public function addPreguntero(Preguntero $preguntero): self
+    {
+        if (!$this->pregunteros->contains($preguntero)) {
+            $this->pregunteros[] = $preguntero;
+            $preguntero->setEvaluacion($this);
+        }
+
+        return $this;
+    }
+
+    public function removePreguntero(Preguntero $preguntero): self
+    {
+        if ($this->pregunteros->removeElement($preguntero)) {
+            // set the owning side to null (unless already changed)
+            if ($preguntero->getEvaluacion() === $this) {
+                $preguntero->setEvaluacion(null);
+            }
+        }
 
         return $this;
     }
