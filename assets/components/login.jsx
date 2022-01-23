@@ -1,29 +1,16 @@
 import React from "react";
 import { useFormik } from "formik";
 import { Container, TextField, Button } from "@material-ui/core";
-import * as Yup from "yup";
-//import InstitucionValidacion from "./InstitucionValidacion";
+import LoginValidacion from "../validations/login-validacion";
 
-const validationSchema = Yup.object({
-    email: Yup.string()
-        .email("Correo Electronico Invalido")
-        .max(180, "Máximo 180 caracteres")
-        .required("Campo Requerido"),
-    password: Yup.string()
-        .min(8, "Mínimo 8 caracteres")
-        .max(12, "Máximo 12 caracteres")
-        .required("Campo Requerido"),
-});
-
-function Institucion() {
-
+export default function Login() {
     const formulario = useFormik({
         initialValues: {
             email: "",
             password: "",
         },
         onSubmit: (values) => { console.log(JSON.stringify(values)+"333"); },
-        validationSchema: validationSchema,
+        validationSchema: LoginValidacion,
     });
 
     return (
@@ -31,7 +18,6 @@ function Institucion() {
             <form onSubmit={formulario.handleSubmit} >
                 <TextField
                     label="Correo Electronico:"
-                    id="email"
                     name="email"
                     type="email"
                     placeholder="Ingresa tu email"
@@ -42,7 +28,6 @@ function Institucion() {
                     onBlur={formulario.handleBlur}
                     error={formulario.touched.email && Boolean(formulario.errors.email)}
                     helperText={formulario.touched.email && formulario.errors.email}
-                    // Style UI:
                     variant="outlined"
                     size="small"
                     margin="normal"
@@ -50,7 +35,6 @@ function Institucion() {
                 />
                 <TextField
                     label="Contraseña:"
-                    id="password"
                     name="password"
                     type="password"
                     placeholder="Ingresa tu contraseña"
@@ -58,7 +42,6 @@ function Institucion() {
                     onBlur={formulario.handleBlur}
                     error={formulario.touched.password && Boolean(formulario.errors.password)}
                     helperText={formulario.touched.password && formulario.errors.password}
-                    // Style UI:
                     variant="outlined"
                     size="small"
                     margin="normal"
@@ -66,7 +49,6 @@ function Institucion() {
                 />
                 <Button
                     type="submit"
-                    // Style UI:
                     color="primary"
                     variant="contained"
                     margin="normal"
@@ -78,5 +60,3 @@ function Institucion() {
         </Container>
     );
 }
-
-export default Institucion;
