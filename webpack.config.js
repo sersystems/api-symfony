@@ -14,7 +14,7 @@ Encore
      * ENTRY CONFIG
      */
     .addEntry('app', './assets/app.js')
-    .enableStimulusBridge('./assets/controllers.json')
+   // .enableStimulusBridge('./assets/controllers.json')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
 
